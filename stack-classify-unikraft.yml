@@ -1,0 +1,25 @@
+provider:
+  name: openfaas
+  gateway: http://192.168.8.117:31112
+
+functions:
+  unikraft-classify-cached:
+    skip_build: false
+    image: registry.nubificus.co.uk/fosdem/unikraft-classify:latest
+    fprocess: "bash qemu_run.sh dog.png 1"
+    annotations:
+      com.openfaas.profile: gpu
+    labels:
+      com.openfaas.scale.min: 2
+      com.openfaas.scale.max: 100
+      com.openfaas.scale.factor: 80
+    limits:
+      cpu: 1000m
+    requests:
+      cpu: 100m
+      memory: 128Mi 
+    environment:
+      sleep_duration: 10
+      read_timeout: "5s"
+      write_timeout: "5s"
+      exec_timeout: "200s"

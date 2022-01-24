@@ -1,0 +1,17 @@
+kind: Profile
+apiVersion: openfaas.com/v1
+metadata:
+  name: gpu
+  namespace: openfaas
+spec:
+    podSecurityContext:
+        AllowPrivilegeEscalation: true
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: gpu
+                operator: In
+                values:
+                - installed
